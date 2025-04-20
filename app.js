@@ -8,27 +8,22 @@ const mongoUrl = process.env.MONGO_URL;
 const server = http.createServer(async (req, res) => {
   try {
     const client = new MongoClient(mongoUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      tls: true, // This is the key fix for Render + Atlas
+      tls: true,
     });
 
     await client.connect();
-    const db = client.db(); // or specify a db name e.g., client.db('test')
+    const db = client.db(); // you can also specify db name like client.db("test")
     const collections = await db.listCollections().toArray();
 
     res.statusCode = 200;
-    res.end(`Connected to MongoDB! Collections: ${collections.length}`);
-
+    res.end(`✅ Connected to MongoDB Atlas! Collections: ${collections.length}`);
     await client.close();
   } catch (err) {
     res.statusCode = 500;
-    res.end('MongoDB connection failed: ' + err.message);
+    res.end('❌ MongoDB connection failed: ' + err.message);
   }
 });
 
 server.listen(port, () => {
-  console.log(`Server running at port ${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
-
-
