@@ -1,2 +1,4 @@
 my-docker-app.tar
 node_modules
+.env
+
